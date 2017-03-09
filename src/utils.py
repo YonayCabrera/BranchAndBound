@@ -760,7 +760,7 @@ class FIFOQueue(Queue):
         return e
 
 
-class BranchAndDimension():
+class BranchAndBound():
     def __init__(self):
         self.A = []
         self.start = 0

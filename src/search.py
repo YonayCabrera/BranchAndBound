@@ -143,8 +143,8 @@ def depth_first_graph_search(problem):
     return graph_search(problem, Stack())
 
 
-def branch_and_dimension_graph_search(problem):
-    return graph_search(problem, BranchAndDimension())
+def branch_and_bound_graph_search(problem):
+    return graph_search(problem, BranchAndBound())
 
 
 def depth_limited_search(problem, limit=50):
