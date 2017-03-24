@@ -3,7 +3,7 @@
 """
 
 from __future__ import generators
-import operator, math, random, copy, sys, os.path, bisect
+import operator, math, random, copy, sys, os.path, bisect, search
 
 # ______________________________________________________________________________
 # Compatibility with Python 2.2 and 2.3
@@ -764,18 +764,15 @@ class BranchAndBound():
     def __init__(self):
         self.A = []
         self.start = 0
-
-    expandido = 0
+        self.expandido = 0
 
     def append(self, item):
         self.A.append(item)
-        """self.A.sort(item, key=operator.attrgetter('pathcost'))"""
 
-    def __len__(self):
-        return len(self.A) - self.start
+        # self.A.sort(item, key=operator.attrgetter('pathcost'))
 
     def extend(self, items):
-        self.expandido += len(items)
+        self.expandido += 1
         self.A.extend(items)
 
     def pop(self):
@@ -787,6 +784,39 @@ class BranchAndBound():
             self.A = self.A[self.start:]
             self.start = 0
         return e
+
+    def getExpandido(self):
+        return self.expandido
+
+
+class BranchAndBoundWithHeuristica():
+    def __init__(self, problem):
+        self.A = []
+        self.start = 0
+        self.expandido = 0
+        self.problem = problem
+
+    def append(self, item):
+        self.A.append(item)
+
+        # self.A.sort(item, key=operator.attrgetter('pathcost'))
+
+    def extend(self, items):
+        self.expandido += 1
+        self.A.extend(items)
+
+    def pop(self):
+        self.A.sort(key=lambda x: (x.path_cost + self.problem.h(x)))
+        e = self.A[self.start]
+        self.start += 1
+
+        if self.start > 5 and self.start > len(self.A) / 2:
+            self.A = self.A[self.start:]
+            self.start = 0
+        return e
+
+    def getExpandido(self):
+        return self.expandido
 
 
 class PriorityQueue(Queue):

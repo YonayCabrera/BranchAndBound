@@ -102,14 +102,37 @@ def tree_search(problem, fringe):
     while fringe:
         node = fringe.pop()
         if problem.goal_test(node.state):
+
             return node
         fringe.extend(node.expand(problem))
     return None
 
 
+def graph_search_branch_and_bound(problem, fringe):
+    """Search through the successors of a problem to find a goal.
+    The argument fringe should be an empty queue.
+    Don't worry about repeFIFOQueueated paths to a state. [Fig. 3.8]"""
+    fringe.append(Node(problem.initial))
+    while fringe:
+        node = fringe.pop()
+        if problem.goal_test(node.state):
+            print(fringe.expandido)
+            return node
+        fringe.extend(node.expand(problem))
+    return None
+
+
+def branch_and_bound_graph_search(problem):
+    return graph_search_branch_and_bound(problem, BranchAndBound())
+
+
+def branch_and_bound_graph_search_With_Heuristica(problem):
+    return graph_search_branch_and_bound(problem, BranchAndBoundWithHeuristica(problem))
+
+
 def breadth_first_tree_search(problem):
     """Search the shallowest nodes in the search tree first. [p 74]"""
-    return tree_search(problem, FIFOQueue())
+    return graph_search(problem, FIFOQueue())
 
 
 def depth_first_tree_search(problem):
@@ -141,10 +164,6 @@ def breadth_first_graph_search(problem):
 def depth_first_graph_search(problem):
     """Search the deepest nodes in the search tree first. [p 74]"""
     return graph_search(problem, Stack())
-
-
-def branch_and_bound_graph_search(problem):
-    return graph_search(problem, BranchAndBound())
 
 
 def depth_limited_search(problem, limit=50):
@@ -208,7 +227,6 @@ def astar_search(problem, h=None):
     Implementar por parte del alumno.    
     
     """
-
 
 
 def reconstruct_path(cameFrom, current):
@@ -340,6 +358,7 @@ class GPSProblem(Problem):
     """The problem of searching in a graph from one node to another."""
 
     def __init__(self, initial, goal, graph):
+        self.inicio = initial
         Problem.__init__(self, initial, goal)
         self.graph = graph
 

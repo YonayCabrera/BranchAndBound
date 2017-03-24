@@ -2,7 +2,8 @@
 
 import search
 
-ab = search.GPSProblem('A', 'C', search.romania)
+ab = search.GPSProblem('A', 'B', search.romania)
+ab2 = search.GPSProblem('A', 'B', search.romania.locations)
 
 
 print search.breadth_first_graph_search(ab).path()
@@ -10,6 +11,9 @@ print search.breadth_first_graph_search(ab).path()
 #print search.iterative_deepening_search(ab).path()
 #print search.depth_limited_search(ab).path()
 print search.branch_and_bound_graph_search(ab).path()
+
+print search.branch_and_bound_graph_search_With_Heuristica(ab).path()
+
 #print search.astar_search(ab).path()
 
 # Result:
